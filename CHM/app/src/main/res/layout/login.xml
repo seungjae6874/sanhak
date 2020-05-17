@@ -125,7 +125,7 @@
             >
 
             <EditText
-                android:id="@+id/기간수"
+                android:id="@+id/periodnumber"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
@@ -147,7 +147,7 @@
                 android:entries="@array/기간"
                 android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/기간수"
+                app:layout_constraintLeft_toRightOf="@id/periodnumber"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
