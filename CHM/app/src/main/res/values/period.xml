@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="기간">
+        <item>개월</item>
+        <item>주</item>
+        <item>일</item>
+    </string-array>
+</resources>
