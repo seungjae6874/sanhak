@@ -2,6 +2,7 @@ package com.example.chm;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import static java.sql.DriverManager.println;
 
 public class MainActivity extends AppCompatActivity {
     EditText name,age,height,weight,periodnumber;
@@ -48,18 +52,22 @@ public class MainActivity extends AppCompatActivity {
                 String userheight = height.getText().toString();//사용자 키
                 String userweight = weight.getText().toString();//사용자 몸무게
                 String userperiod = periodnumber.getText().toString() + term[0]; //식단기간
-                if(periodnumber.getText().toString() == String.valueOf(0)){
-                    userperiod = "일일 관리";
+                String userperiodnumber = periodnumber.getText().toString();
+                if((user.length() <=0 )||(periodnumber.length() <=0 )||(userage.length() <=0 )||(userheight.length() <=0 )||((userweight.length() <=0 ))){
+                    Toast.makeText(MainActivity.this,"프로필을 입력해주세요.",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    //Intent로 이제 다음 화면에 넘겨주자 이 값들이 프로필로써 사용되므로
+                    Intent intent = new Intent(MainActivity.this, LoginResultActivity.class);
+                    intent.putExtra("user",user);
+                    intent.putExtra("userage",userage);
+                    intent.putExtra("userheight",userheight);
+                    intent.putExtra("userweight",userweight);
+                    intent.putExtra("userperiod",userperiod);
+                    intent.putExtra("userperiodnumber",userperiodnumber);//기간 숫자만
+                    startActivity(intent);
                 }
 
-                //Intent로 이제 다음 화면에 넘겨주자 이 값들이 프로필로써 사용되므로
-                Intent intent = new Intent(MainActivity.this, LoginResultActivity.class);
-                intent.putExtra("user",user);
-                intent.putExtra("userage",userage);
-                intent.putExtra("userheight",userheight);
-                intent.putExtra("userweight",userweight);
-                intent.putExtra("userperiod",userperiod);
-                startActivity(intent);
             }
         });
 

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/text"
@@ -13,7 +11,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Make a Profile"
+        android:text="프로필 수정"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@id/icon"
@@ -37,8 +35,8 @@
         android:id="@+id/name"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:hint="사용자(닉네임)"
         android:layout_marginTop="20dp"
+        android:text="이름"
         android:paddingLeft="15sp"
         android:textColorHint="#5C5A5A"
         app:layout_constraintBottom_toTopOf="@id/age"
@@ -103,7 +101,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="10sp"
         android:background="@drawable/bin_blue"
-        android:text="Login"
+        android:text="완료"
         android:textColor="#F6F2F2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -158,6 +156,4 @@
 
 
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

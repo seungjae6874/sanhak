@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">CHM</string>
+    <string name="modify">프로필 수정</string>
+    <string name="username">%s</string>
+    <string name="userage">%s</string>
+    <string name="userweight">%s</string>
+    <string name="userheight">%s</string>
+    <string name="userperiod">%s</string>
+    <string name="userperiodfull">%s</string>
+    <string name="message">   CHM과 함께\n건강한 식단관리\n 준비되셨나요?</string>
 </resources>
