@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 String userheight = height.getText().toString();//사용자 키
                 String userweight = weight.getText().toString();//사용자 몸무게
                 String userperiod = periodnumber.getText().toString() + term[0]; //식단기간
-                if(periodnumber.getText().toString() == String.valueOf('0')){
+                if(periodnumber.getText().toString() == String.valueOf(0)){
                     userperiod = "일일 관리";
                 }
 
