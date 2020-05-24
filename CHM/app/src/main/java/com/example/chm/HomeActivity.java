@@ -1,0 +1,69 @@
+package com.example.chm;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.time.Month;
+import java.util.Calendar;
+
+public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG = "HomeActvity";
+    private CalendarView calendarView;
+    TextView diettable;
+    TextView date;
+    //Button EditDiet;
+    //Button addfood;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.homecalendar);
+        //----------------------------------LoginResultActivity에서 보낸 Intent-----------------
+
+        Intent intent = getIntent(); //Intent수신
+
+        date = findViewById(R.id.date); //날짜가 표시될 텍스트
+        SimpleDateFormat initdate = new SimpleDateFormat( "yyyy년 MM월 dd일의 식단"); //TextView의 date현재날짜로 초기화
+        String format_time1 = initdate.format (System.currentTimeMillis());
+        date.setText(format_time1);
+
+
+        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView); //캘린더뷰 띄움
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() { // 클릭시 반응하는 리스너 추가
+            @Override
+            public void onSelectedDayChange(/*@NonNull*/ CalendarView calendarView, int year, int month, int dayOfMonth) {
+                String dates = year + "년 " + (month+1) + "월 " + dayOfMonth + "일의 식단"; //캘린더에 날짜를 클릭하면 해당 날짜의 년,월,일 받아옴
+                //왜인지 모르겠지만 월이 안맞음 month+1로 수정
+                //애뮬레이터가 미국시간이라 미국시간으로 출력하는것 같다. .
+                Log.d(TAG, "onSelectedDayChange: date: " + dates);
+                date.setText(dates);// 해당 날짜를 TextView에 표시
+                //Toast.makeText()
+
+
+            }
+        });
+
+         /*       //.getInstance();
+        c.OnDateSetListener
+
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        */
+
+
+    }
+}
