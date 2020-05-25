@@ -35,18 +35,21 @@ public class LoginResultActivity extends AppCompatActivity {
         start = findViewById(R.id.start);
 
         //-----------------이건 시작 화면에서 프로필 초기 생성 시 보내준 정보 --------------------
+        // 메인에서 보내는 intent와 login에서 보내는 intent를 갖게 보내면?
         Intent intent = getIntent();
 
+        //한번 모든 loginresult 액티비티가 받는 인텐드 메시지를 같게해보자 m붙여서
         Bundle bundle = intent.getExtras(); //Main에서 보낸 값을 담는 번들
         //이 값이 프로필 초기 설정 후에 저장된 정보
-        final String username = bundle.getString("user");
-        final String userage = bundle.getString("userage");
-        final String userheight = bundle.getString("userheight");
-        final String userweight = bundle.getString("userweight");
-        final String userperiod = bundle.getString("userperiod");
-        final String userperiodnumber = bundle.getString("userperiodnumber");
+        final String username = bundle.getString("musername");
+        final String userage = bundle.getString("muserage");
+        final String userheight = bundle.getString("muserheight");
+        final String userweight = bundle.getString("muserweight");
+        final String userperiod = bundle.getString("muserperiod");
+        final String userperiodnumber = bundle.getString("muserperiodnumber");
 /*
 */
+        //메인에서 넘어올 때
         //1. 사용자  이름을 띄워주기
         usernamed.setText(username+"님");
         //2. 식단 기간 띄워주기
@@ -62,8 +65,10 @@ public class LoginResultActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent2 = getIntent();
                 Bundle bundle2 = intent2.getExtras();
-                String username = bundle2.getString("user");
+                String username = bundle2.getString("musername");
                 String username1 = username;//name을 다시 변환
+
+                //여기서 다시 수정 버튼 눌렸을 때 값이 null 아니라 최근 값으로 들어가야한다.
                 Intent intent = new Intent(LoginResultActivity.this, ModifyProfileActivity.class);
                 intent.putExtra("username",username1);
                 intent.putExtra("userage",userage);
@@ -78,7 +83,9 @@ public class LoginResultActivity extends AppCompatActivity {
 
             }
         });
-        //여기서 받고 돌아오면 새 값으로 정보를 수정하자.
+        //여기서 받고 돌아오면 새 값으로 정보를 수정하자
+        //------------------------------------------------------------
+        //여기가 프로필 수정 후에 받는 정보
         Intent intent3 = getIntent();
         Bundle bundle2 = intent3.getExtras();
         final String username2 = bundle2.getString("musername");
@@ -86,10 +93,10 @@ public class LoginResultActivity extends AppCompatActivity {
         final String userheight2 = bundle2.getString("muserheight");
         final String userweight2 = bundle2.getString("muserweight");
         final String userperiod2 = bundle2.getString("muserperiod");
-        final String userperiodnumber2 = bundle2.getString("userperiodnumber");
+        final String userperiodnumber2 = bundle2.getString("muserperiodnumber");
         final Boolean getcheck = bundle2.getBoolean("responsecheck");
         //1. 사용자  이름을 띄워주기
-        if(getcheck){
+        if(getcheck != modifycheck){
             usernamed.setText(username2+"님");
             //2. 식단 기간 띄워주기
             userperioded.setText("기간 : "+userperiod2);

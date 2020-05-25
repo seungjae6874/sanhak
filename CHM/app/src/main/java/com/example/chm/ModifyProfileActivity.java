@@ -78,15 +78,19 @@ public class ModifyProfileActivity extends AppCompatActivity {
                 String userheight1 = height.getText().toString();
                 String userweight1 = weight.getText().toString();
                 String userperiod1 = periodnumber.getText().toString()+term[0];
+                String userperiodnumber1 = periodnumber.getText().toString();
                 boolean modifycheckfinal = true;
                 //다시 프로필 창으로 정보 INTENT로 보내기, 프로필 창 다시 수정해줘야함.
+
+                //------------------------------------------------------------
+                //이 값이 최신으로 바뀌는 프로필 정보값이다.
                 Intent intent2 = new Intent(ModifyProfileActivity.this, LoginResultActivity.class);
                 intent2.putExtra("musername", username1);
                 intent2.putExtra("muserage", userage1);
                 intent2.putExtra("muserheight", userheight1);
                 intent2.putExtra("muserweight", userweight1);
                 intent2.putExtra("muserperiod",userperiod1);
-                //intent2.putExtra("muserperiodnumber",userperiodnumber);//기간에서 문자 뺴고 숫자만 보내기
+                intent2.putExtra("muserperiodnumber",userperiodnumber1);//기간에서 문자 뺴고 숫자만 보내기
                 intent2.putExtra("responsecheck",modifycheckfinal); //수정 확인 응답
                 startActivity(intent2);
 

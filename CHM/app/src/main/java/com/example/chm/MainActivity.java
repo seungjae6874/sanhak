@@ -59,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     //Intent로 이제 다음 화면에 넘겨주자 이 값들이 프로필로써 사용되므로
                     Intent intent = new Intent(MainActivity.this, LoginResultActivity.class);
-                    intent.putExtra("user",user);
-                    intent.putExtra("userage",userage);
-                    intent.putExtra("userheight",userheight);
-                    intent.putExtra("userweight",userweight);
-                    intent.putExtra("userperiod",userperiod);
-                    intent.putExtra("userperiodnumber",userperiodnumber);//기간 숫자만
+                    intent.putExtra("musername",user);
+                    intent.putExtra("muserage",userage);
+                    intent.putExtra("muserheight",userheight);
+                    intent.putExtra("muserweight",userweight);
+                    intent.putExtra("muserperiod",userperiod);
+                    intent.putExtra("muserperiodnumber",userperiodnumber);//기간 숫자만
                     startActivity(intent);
                 }
 
