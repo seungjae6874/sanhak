@@ -107,5 +107,6 @@ public class LoginResultActivity extends AppCompatActivity {
 
         }
 
+        //한번 사용자 이름과 식단기간을 s3 버킷에 보내보자
     }
 }
