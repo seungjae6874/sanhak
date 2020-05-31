@@ -21,14 +21,13 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class TextActivity extends AppCompatActivity {
 
     EditText Filename,Content;
     Button btn;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.text_main);
 
         //aws에 접근하기위한 정보들
         credentialsProvider = new CognitoCachingCredentialsProvider(getApplicationContext(),
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
                text = Content.getText().toString().trim();
                if(text.isEmpty()){ //비어있다면
-                   Toast.makeText(MainActivity.this,"Please enter something",Toast.LENGTH_SHORT).show();
+                   Toast.makeText(TextActivity.this,"Please enter something",Toast.LENGTH_SHORT).show();
                }
                else{ //음식이 입력된다면
                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                                    foodfilepath
                                    //음식이름을 입력한 txt를 저장하고 나서 aws에 업로드하자
                            );
-                           Toast.makeText(MainActivity.this, "Success to upload",Toast.LENGTH_LONG).show();
+                           Toast.makeText(TextActivity.this, "Success to upload",Toast.LENGTH_LONG).show();
                        }
                    }
                    else{
@@ -98,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                                "textfile",
                                foodfilepath
                        );
-                       Toast.makeText(MainActivity.this, "Success to upload",Toast.LENGTH_LONG).show();
+                       Toast.makeText(TextActivity.this, "Success to upload",Toast.LENGTH_LONG).show();
 
                    }
 
@@ -117,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     saveToTxtFile(text);
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"Storage permissions ",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TextActivity.this,"Storage permissions ",Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -143,11 +142,11 @@ public class MainActivity extends AppCompatActivity {
             bw.write(text);
             bw.close();
 
-            Toast.makeText(MainActivity.this,fileName+" is saved"+dir,Toast.LENGTH_SHORT).show();
+            Toast.makeText(TextActivity.this,fileName+" is saved"+dir,Toast.LENGTH_SHORT).show();
 
         }catch (Exception e){
 
-            Toast.makeText(MainActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(TextActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
 
         }
 
