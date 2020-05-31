@@ -83,6 +83,8 @@ public class LoginResultActivity extends AppCompatActivity {
 
             }
         });
+
+
         //여기서 받고 돌아오면 새 값으로 정보를 수정하자
         //------------------------------------------------------------
         //여기가 프로필 수정 후에 받는 정보
@@ -106,6 +108,18 @@ public class LoginResultActivity extends AppCompatActivity {
 
 
         }
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // home으로 보내는 Intent
+                Intent intentH = new Intent(LoginResultActivity.this, HomeActivity.class);
+                startActivity(intentH);
+                //finish(); // 현재 액티비티 없애고 다른 액티비티를 띄운다. 아래링크 대로
+                //https://hashcode.co.kr/questions/3484/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%99%94%EB%A9%B4-%EC%A0%84%ED%99%98-%EC%A4%91-%EC%97%90%EB%9F%AC
+
+            }
+        });
+
 
     }
 }
