@@ -28,8 +28,8 @@
 
     <LinearLayout
         android:id="@+id/lay1"
-        android:layout_width="409dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
             android:background="@drawable/bin_blue"
+            android:paddingRight="20dp"
             android:text="식단추가"
             android:textColor="#FFFFFF" />
 
