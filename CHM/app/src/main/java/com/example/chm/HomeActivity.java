@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-
-
-=======
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
 package com.example.chm;
 
 import androidx.annotation.NonNull;
@@ -29,19 +24,13 @@ public class HomeActivity extends AppCompatActivity {
     private CalendarView calendarView;
     TextView diettable;
     TextView date;
-<<<<<<< HEAD
     Button AddDiet;
     Button EditDiet;
-=======
-    //Button EditDiet;
-    //Button addfood;
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homecalendar);
-<<<<<<< HEAD
         //----------------------------------LoginResultActivity에서 보낸 Intent---------------------//
 
 
@@ -51,12 +40,6 @@ public class HomeActivity extends AppCompatActivity {
         AddDiet = findViewById(R.id.AddDiet); // 버튼 추가
         EditDiet = findViewById(R.id.EditDiet);
 
-=======
-        //----------------------------------LoginResultActivity에서 보낸 Intent-----------------
-
-        Intent intent = getIntent(); //Intent수신
-
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
         date = findViewById(R.id.date); //날짜가 표시될 텍스트
         SimpleDateFormat initdate = new SimpleDateFormat( "yyyy년 MM월 dd일의 식단"); //TextView의 date현재날짜로 초기화
         String format_time1 = initdate.format (System.currentTimeMillis());
@@ -72,16 +55,11 @@ public class HomeActivity extends AppCompatActivity {
                 //애뮬레이터가 미국시간이라 미국시간으로 출력하는것 같다. .
                 Log.d(TAG, "onSelectedDayChange: date: " + dates);
                 date.setText(dates);// 해당 날짜를 TextView에 표시
-<<<<<<< HEAD
-=======
-                //Toast.makeText()
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
 
 
             }
         });
 
-<<<<<<< HEAD
         AddDiet.setOnClickListener(new View.OnClickListener() { // 식단추가 액티비티 연결
             @Override
             public void onClick(View view) {
@@ -94,15 +72,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-=======
-         /*       //.getInstance();
-        c.OnDateSetListener
-
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        */
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
 
 
     }

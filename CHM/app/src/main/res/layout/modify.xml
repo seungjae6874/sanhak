@@ -4,117 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="프로필 수정"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@id/icon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:src="@mipmap/ic_launcher"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text" />
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:text="이름"
-        android:paddingLeft="15sp"
-        android:textColorHint="#5C5A5A"
-        app:layout_constraintBottom_toTopOf="@id/age"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icon" />
-
-    <EditText
-        android:id="@+id/age"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:hint="나이(만)"
-        android:paddingLeft="15sp"
-        android:textColorHint="#5C5A5A"
-        app:layout_constraintBottom_toTopOf="@id/height"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name" />
-
-    <EditText
-        android:id="@+id/height"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:hint="키(cm)"
-        android:paddingLeft="15sp"
-        android:textColorHint="#5C5A5A"
-        app:layout_constraintBottom_toTopOf="@id/weight"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/age" />
-
-    <EditText
-        android:id="@+id/weight"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:hint="체중(kg)"
-        android:paddingLeft="15sp"
-        android:textColorHint="#5C5A5A"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/height" />
-
-    <TextView
-        android:id="@+id/기간입력"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10sp"
-        android:layout_marginBottom="10sp"
-        android:paddingLeft="60sp"
-        android:text="원하는 식단 관리기간(당일 관리는 '1일'입력)"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/buttonmenu"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/weight" />
-
-
-    <Button
-        android:id="@+id/login"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10sp"
-        android:background="@drawable/bin_blue"
-        android:text="완료"
-        android:textColor="#F6F2F2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonmenu" />
-
-    <LinearLayout
-        android:id="@+id/buttonmenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        app:layout_constraintBottom_toTopOf="@id/login"
-        app:layout_constraintTop_toBottomOf="@id/기간입력">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cons1"
@@ -155,5 +45,5 @@
 
 
 
-    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

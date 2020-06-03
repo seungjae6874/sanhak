@@ -28,13 +28,8 @@
 
     <LinearLayout
         android:id="@+id/lay1"
-<<<<<<< HEAD
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-=======
-        android:layout_width="409dp"
-        android:layout_height="70dp"
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -43,19 +38,12 @@
         tools:layout_constraintLeft_toLeftOf="parent">
 
         <Button
-<<<<<<< HEAD
             android:id="@+id/AddDiet"
-=======
-            android:id="@+id/button"
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
             android:background="@drawable/bin_blue"
-<<<<<<< HEAD
             android:paddingRight="20dp"
-=======
->>>>>>> e847e93e3a670ad4d06f323468416411ee3e9bd3
             android:text="식단추가"
             android:textColor="#FFFFFF" />
 
