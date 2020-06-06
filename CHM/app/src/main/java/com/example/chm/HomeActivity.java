@@ -1,5 +1,3 @@
-
-
 package com.example.chm;
 
 import androidx.annotation.NonNull;

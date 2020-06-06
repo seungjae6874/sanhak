@@ -19,9 +19,16 @@
         </activity>
         <activity android:name=".LoginResultActivity"></activity>
         <activity android:name=".ModifyProfileActivity"></activity>
-        <activity android:name=".HomeActivity"></activity> //액티비티 추가
+        <activity android:name=".HomeActivity"></activity>
         <activity android:name=".AddDietActivity"></activity>
+
+        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true"/>
     </application>
-    <uses-permission android:name="android.permission.RECORD_AUDIO" /> // 오디오 권한 추가
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
 
 </manifest>
