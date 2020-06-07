@@ -27,11 +27,22 @@
         <activity android:name=".ModifyProfileActivity"></activity>
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".AddDietActivity"></activity>
+<<<<<<< HEAD
         <activity android:name=".RecordActivity"></activity>
         <activity android:name=".TextActivity"></activity>
         <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
     </application>
+=======
+
+        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true"/>
+    </application>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+>>>>>>> d6387061e9c1ae079df98315b6b1e1a10d2ce082
 
 
 </manifest>
