@@ -42,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40sp"
+            android:layout_marginRight="40sp"
             android:background="@drawable/bin_blue"
             android:paddingRight="20dp"
             android:text="식단추가"
