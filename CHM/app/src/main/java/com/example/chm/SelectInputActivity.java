@@ -9,12 +9,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SelectInputActivity extends AppCompatActivity {
-    Button text,record;
+    Button text,record,feed;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_main);
         text = findViewById(R.id.textinput);
         record = findViewById(R.id.record);
+
 
         //식단 추가 후 입력 버튼 눌렀을 때
         text.setOnClickListener(new View.OnClickListener() {
@@ -35,6 +36,7 @@ public class SelectInputActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+
 
 
 

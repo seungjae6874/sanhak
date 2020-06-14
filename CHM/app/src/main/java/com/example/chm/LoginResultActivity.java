@@ -79,8 +79,6 @@ public class LoginResultActivity extends AppCompatActivity {
                 intent.putExtra("modifycheck",modifycheck);//프로필 수정했다고 확인
                 startActivity(intent);
 
-
-
             }
         });
 

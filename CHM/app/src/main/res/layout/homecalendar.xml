@@ -26,6 +26,25 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calendarView" />
 
+    <TextView
+        android:id="@+id/checkd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@id/diettable"
+        app:layout_constraintRight_toLeftOf="@id/date"
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
+    <TextView
+        android:id="@+id/checkd2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+
+        app:layout_constraintBottom_toTopOf="@id/diettable"
+        app:layout_constraintRight_toLeftOf="@id/checkd"
+        app:layout_constraintTop_toBottomOf="@id/calendarView" />
+
     <LinearLayout
         android:id="@+id/lay1"
         android:layout_width="wrap_content"
@@ -55,6 +74,14 @@
             android:layout_marginRight="40sp"
             android:background="@drawable/bin_blue"
             android:text="식단수정"
+            android:textColor="#FFFFFF" />
+        <Button
+            android:id="@+id/CheckFeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="40sp"
+            android:background="@drawable/bin_blue"
+            android:text="피드백 확인"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 
