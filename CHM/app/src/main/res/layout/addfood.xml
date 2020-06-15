@@ -35,11 +35,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/TextInputButton" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30sp"
+        android:completionThreshold="1"
         android:ems="10"
         android:hint="음식이름을 입력해주세요"
         android:inputType="textPersonName"
