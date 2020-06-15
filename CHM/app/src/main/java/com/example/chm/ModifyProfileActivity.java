@@ -19,7 +19,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.modify);
+        setContentView(R.layout.login);
 
         Intent intent = getIntent();
 
@@ -32,6 +32,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
         final String userperiod = bundle.getString("userperiod");
         final String userperiodnumber = bundle.getString("userperiodnumber");
         final boolean modifycheck2 = bundle.getBoolean("modifycheck");
+        final String useractive = bundle.getString("useractive");
 
         Resources res = getResources();
         String changename = String.format(res.getString(R.string.username),username);
@@ -56,6 +57,9 @@ public class ModifyProfileActivity extends AppCompatActivity {
         //여기까지는 이전에 기록했던 프로필을 먼저 hint로 보여주는것
         final Spinner spinner = findViewById(R.id.period);
         final String[] term = new String[1]; //개월인지 주 인지 일인지
+        final Spinner spinner2 = findViewById(R.id.active); //활동지수
+
+        final String[] active = new String[1]; //활동지수를 받는 배열
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -69,6 +73,17 @@ public class ModifyProfileActivity extends AppCompatActivity {
             }
         });
 
+        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                active[0] = spinner2.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +94,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                 String userweight1 = weight.getText().toString();
                 String userperiod1 = periodnumber.getText().toString()+term[0];
                 String userperiodnumber1 = periodnumber.getText().toString();
+                String useractivenum = active[0];
                 boolean modifycheckfinal = true;
                 //다시 프로필 창으로 정보 INTENT로 보내기, 프로필 창 다시 수정해줘야함.
 
@@ -92,6 +108,7 @@ public class ModifyProfileActivity extends AppCompatActivity {
                 intent2.putExtra("muserperiod",userperiod1);
                 intent2.putExtra("muserperiodnumber",userperiodnumber1);//기간에서 문자 뺴고 숫자만 보내기
                 intent2.putExtra("responsecheck",modifycheckfinal); //수정 확인 응답
+                intent2.putExtra("useractive",useractivenum);
                 startActivity(intent2);
 
             }

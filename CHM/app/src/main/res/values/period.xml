@@ -5,4 +5,9 @@
         <item>주</item>
         <item>일</item>
     </string-array>
+    <string-array name="활동지수">
+        <item>25</item>
+        <item>35</item>
+        <item>40</item>
+    </string-array>
 </resources>

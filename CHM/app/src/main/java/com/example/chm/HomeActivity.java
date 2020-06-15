@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     Button EditDiet;
     Button feed;
     String checkdate;
+    String ksum;
     int feedy,feedm,feedd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +47,14 @@ public class HomeActivity extends AppCompatActivity {
         this.InitializeListener();
 
         Intent intent = getIntent(); //Intent수신
+        Bundle bundle = intent.getExtras();
 
         AddDiet = findViewById(R.id.AddDiet); // 버튼 추가
         EditDiet = findViewById(R.id.EditDiet);
         feed = findViewById(R.id.CheckFeed);
         check = findViewById(R.id.checkd);
         check2 = findViewById(R.id.checkd2);
-
+        ksum = bundle.getString("rkcal");//권장 칼로리
 
         date = findViewById(R.id.date); //날짜가 표시될 텍스트
         SimpleDateFormat initdate = new SimpleDateFormat( "yyyy년 MM월 dd일의 식단"); //TextView의 date현재날짜로 초기화
@@ -104,6 +106,7 @@ public class HomeActivity extends AppCompatActivity {
 
                         Intent intentC = new Intent(HomeActivity.this, FeedbackActivity.class);
                         checkdate = check.getText().toString();
+                        intentC.putExtra("rkcal",ksum);
                         intentC.putExtra("checkdate",checkdate);
                         //우선 이 값을 intent로 새로운 feedresultactivity로 보내자
                         startActivity(intentC);

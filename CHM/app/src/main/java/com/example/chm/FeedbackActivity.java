@@ -30,12 +30,14 @@ public class FeedbackActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras(); //홈에서 보낸 값을 담는 번들
         //이 값이 쿼리로 이용할 날짜값
         String querydate = bundle.getString("checkdate");
+        String ksum = bundle.getString("rkcal");
+        String weight = bundle.getString("rweight");
 
         //---------------------------
 
         show = findViewById(R.id.result);
         cdate = findViewById(R.id.cdate);
-        //cdate.setText("Feedback Info");
+        //cdate.setText(ksum);
 
         CognitoCachingCredentialsProvider cognitoProvider = new CognitoCachingCredentialsProvider(
                 this.getApplicationContext(),
@@ -48,7 +50,7 @@ public class FeedbackActivity extends AppCompatActivity {
         final MyInterface myInterface = factory.build(MyInterface.class);
 
         //나중에 checkdate는 날짜를 선택했을때의 피드백 날짜이다.
-        RequestClass request = new RequestClass(querydate);
+        RequestClass request = new RequestClass(querydate, ksum);
 
         new AsyncTask<RequestClass, Void, ResponseClass>() {
             @Override

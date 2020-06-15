@@ -17,6 +17,10 @@ public class LoginResultActivity extends AppCompatActivity {
     TextView userprofile;
     TextView userperioded;
     TextView message;
+    TextView uactive;
+    String rksum;
+    int ksum=0;
+    String resultactivenum,resultheight, resultweight;
     //다음 식단 수정창 or 프로필 수정창으로 이동
     Button modify;
     Button start;
@@ -33,6 +37,7 @@ public class LoginResultActivity extends AppCompatActivity {
         message = findViewById(R.id.startmessage);
         modify = findViewById(R.id.modify);
         start = findViewById(R.id.start);
+        uactive = findViewById(R.id.uactive);
 
         //-----------------이건 시작 화면에서 프로필 초기 생성 시 보내준 정보 --------------------
         // 메인에서 보내는 intent와 login에서 보내는 intent를 갖게 보내면?
@@ -47,6 +52,7 @@ public class LoginResultActivity extends AppCompatActivity {
         final String userweight = bundle.getString("muserweight");
         final String userperiod = bundle.getString("muserperiod");
         final String userperiodnumber = bundle.getString("muserperiodnumber");
+        final String useractivenum = bundle.getString("activenum");
 /*
 */
         //메인에서 넘어올 때
@@ -54,6 +60,18 @@ public class LoginResultActivity extends AppCompatActivity {
         usernamed.setText(username+"님");
         //2. 식단 기간 띄워주기
         userperioded.setText("기간 : "+userperiod);
+        //활동지수 띄우기
+        uactive.setText("활동지수 : "+useractivenum);
+        resultactivenum = useractivenum;
+        resultheight= userheight;
+        resultweight=userweight;
+        ksum = (int)(Integer.parseInt(resultheight)-100*0.9); //표준체중 계산
+        ksum = ksum*(Integer.parseInt(resultactivenum)); //하루 권장 칼로리 계산
+
+        rksum = String.valueOf(ksum); //string으로 변환
+        uactive.setText("권장 하루 칼로리 : "+rksum);
+
+
         //3. 건강한 식단 문구 띄워주기
         Animation anim = AnimationUtils.loadAnimation(LoginResultActivity.this, R.anim.alpha_anim);
         message.startAnimation(anim);
@@ -77,6 +95,7 @@ public class LoginResultActivity extends AppCompatActivity {
                 intent.putExtra("userperiod",userperiod);
                 intent.putExtra("userperiodnumber",userperiodnumber);//기간에서 문자 뺴고 숫자만 보내기
                 intent.putExtra("modifycheck",modifycheck);//프로필 수정했다고 확인
+                intent.putExtra("useractive",useractivenum);
                 startActivity(intent);
 
             }
@@ -95,14 +114,29 @@ public class LoginResultActivity extends AppCompatActivity {
         final String userperiod2 = bundle2.getString("muserperiod");
         final String userperiodnumber2 = bundle2.getString("muserperiodnumber");
         final Boolean getcheck = bundle2.getBoolean("responsecheck");
+        final String useractivenum2 = bundle2.getString("useractive");
         //1. 사용자  이름을 띄워주기
         if(getcheck != modifycheck){
             usernamed.setText(username2+"님");
             //2. 식단 기간 띄워주기
             userperioded.setText("기간 : "+userperiod2);
             //3. 건강한 식단 문구 띄워주기
+            uactive.setText("권장 하루 칼로리 : "+rksum);
             Animation anim2 = AnimationUtils.loadAnimation(LoginResultActivity.this, R.anim.alpha_anim);
             message.startAnimation(anim);
+            resultactivenum= uactive.getText().toString();
+            resultheight= userheight2;
+            resultweight=userweight2;
+            ksum = (int)(Integer.parseInt(resultheight)-100*0.9); //표준체중 계산
+            ksum = ksum*(Integer.parseInt(resultactivenum)); //하루 권장 칼로리 계산
+            rksum = String.valueOf(ksum); //string으로 변환
+
+            //피드백액티비티에 칼로리 계산 값을 준다.
+            Intent intentF = new Intent(LoginResultActivity.this, FeedbackActivity.class);
+
+            intentF.putExtra("rkcal",rksum);
+            intentF.putExtra("rweight",resultweight);
+
 
 
         }
@@ -111,12 +145,18 @@ public class LoginResultActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // home으로 보내는 Intent
                 Intent intentH = new Intent(LoginResultActivity.this, HomeActivity.class);
+                intentH.putExtra("rkcal",rksum); //전송
+                intentH.putExtra("rweight",resultweight);
                 startActivity(intentH);
                 //finish(); // 현재 액티비티 없애고 다른 액티비티를 띄운다. 아래링크 대로
                 //https://hashcode.co.kr/questions/3484/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%99%94%EB%A9%B4-%EC%A0%84%ED%99%98-%EC%A4%91-%EC%97%90%EB%9F%AC
 
             }
         });
+
+
+
+
 
 
         //한번 사용자 이름과 식단기간을 s3 버킷에 보내보자
