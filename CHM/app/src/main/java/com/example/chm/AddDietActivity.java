@@ -188,6 +188,11 @@ public class AddDietActivity extends AppCompatActivity
                             );
                             Toast.makeText(AddDietActivity.this, "Success to upload", Toast.LENGTH_LONG).show();
 
+                            Intent intentH2 = new Intent(AddDietActivity.this, HomeActivity.class);
+                            intentH2.putExtra("FoodName",text);
+                            startActivity(intentH2);
+
+
                         }
 
                     }
