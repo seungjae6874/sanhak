@@ -31,6 +31,10 @@ public class HomeActivity extends AppCompatActivity {
     TextView date;
     TextView check,check2;
 
+    TextView food1,food2,food3;
+    TextView morning, lunch, dinner;
+
+
     Button AddDiet;
     Button EditDiet;
     Button feed;
@@ -50,11 +54,22 @@ public class HomeActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
 
         AddDiet = findViewById(R.id.AddDiet); // 버튼 추가
-        EditDiet = findViewById(R.id.EditDiet);
         feed = findViewById(R.id.CheckFeed);
         check = findViewById(R.id.checkd);
         check2 = findViewById(R.id.checkd2);
         ksum = bundle.getString("rkcal");//권장 칼로리
+
+        //오늘 먹은 식단을 diettable에 넣어줘야 한다.
+        //1. xml과 연결
+        food1 = findViewById(R.id.st_foodname);
+        morning = findViewById(R.id.st_meal);
+        food2 = findViewById(R.id.nd_foodname);
+        lunch = findViewById(R.id.nd_meal);
+        food3 = findViewById(R.id.rd_foodname);
+        dinner = findViewById(R.id.rd_meal);
+        //2. aws에서 먹은 음식과 끼니시간을 aws에서 받아서 setText해주기
+
+
 
         date = findViewById(R.id.date); //날짜가 표시될 텍스트
         SimpleDateFormat initdate = new SimpleDateFormat( "yyyy년 MM월 dd일의 식단"); //TextView의 date현재날짜로 초기화
@@ -132,9 +147,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 //check.setText(String.valueOf(year+month+dayOfMonth));
                 check.setText(String.valueOf(year-2000)+'0'+String.valueOf(month+1)+String.valueOf(dayOfMonth));
-
-
-
 
             }
         };

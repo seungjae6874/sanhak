@@ -69,7 +69,7 @@ public class LoginResultActivity extends AppCompatActivity {
         ksum = ksum*(Integer.parseInt(resultactivenum)); //하루 권장 칼로리 계산
 
         rksum = String.valueOf(ksum); //string으로 변환
-        uactive.setText("권장 하루 칼로리 : "+rksum);
+        uactive.setText("권장 하루 칼로리 : "+rksum+"Kcal");
 
 
         //3. 건강한 식단 문구 띄워주기
@@ -121,7 +121,7 @@ public class LoginResultActivity extends AppCompatActivity {
             //2. 식단 기간 띄워주기
             userperioded.setText("기간 : "+userperiod2);
             //3. 건강한 식단 문구 띄워주기
-            uactive.setText("권장 하루 칼로리 : "+rksum);
+            uactive.setText("권장 하루 칼로리 : "+rksum+"Kcal");
             Animation anim2 = AnimationUtils.loadAnimation(LoginResultActivity.this, R.anim.alpha_anim);
             message.startAnimation(anim);
             resultactivenum= uactive.getText().toString();
