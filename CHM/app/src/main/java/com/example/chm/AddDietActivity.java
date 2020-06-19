@@ -1,9 +1,11 @@
 package com.example.chm;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -146,41 +148,76 @@ public class AddDietActivity extends AppCompatActivity
         textInputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddDietActivity.this);
+                String TAG = "이(가) 맞습니까";
+                builder.setTitle("확인창");
 
                 text = editTextInput.getText().toString().trim();
-                if (text.isEmpty()) { //비어있다면
-                    Toast.makeText(AddDietActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
-                } else { //음식이 입력된다면
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                            String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                            //show popup for runtime permission
-                            requestPermissions(permissions, WRITE_EXTERNAL_STORAGE_CODE);
-                        } else {//음식이름을 입력한 txt를 저장하고 나서 aws에 업로드하자.
-                            //permission already granted
+                builder.setMessage(text + TAG);
+
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "해당음식을 기록합니다", Toast.LENGTH_SHORT).show();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                //show popup for runtime permission
+                                requestPermissions(permissions, WRITE_EXTERNAL_STORAGE_CODE);
+                            } else {//음식이름을 입력한 txt를 저장하고 나서 aws에 업로드하자.
+                                //permission already granted
+                                saveToTxtFile(text);
+                                //저장하고나면 upload 시키자자
+                                TransferObserver Observer = transferUtilitytext.upload(
+                                        "food-anlaysis-text",
+                                        "foodname.txt",
+                                        foodfilepath
+                                        //음식이름을 입력한 txt를 저장하고 나서 aws에 업로드하자
+                                );
+                                Toast.makeText(AddDietActivity.this, "Success to upload", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
                             saveToTxtFile(text);
+
+
                             //저장하고나면 upload 시키자자
                             TransferObserver Observer = transferUtilitytext.upload(
                                     "food-anlaysis-text",
-                                    "foodname.txt",
+                                    "textfile",
                                     foodfilepath
-                                    //음식이름을 입력한 txt를 저장하고 나서 aws에 업로드하자
                             );
                             Toast.makeText(AddDietActivity.this, "Success to upload", Toast.LENGTH_LONG).show();
+
+                            Intent intentH2 = new Intent(AddDietActivity.this, HomeActivity.class);
+                            intentH2.putExtra("FoodName",text);
+                            startActivity(intentH2);
+
+
                         }
-                    } else {
-                        saveToTxtFile(text);
-
-
-                        //저장하고나면 upload 시키자자
-                        TransferObserver Observer = transferUtilitytext.upload(
-                                "food-anlaysis-text",
-                                "textfile",
-                                foodfilepath
-                        );
-                        Toast.makeText(AddDietActivity.this, "Success to upload", Toast.LENGTH_LONG).show();
 
                     }
+                });
+
+                builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                        dialogInterface.cancel();
+
+
+
+
+                    }
+                });
+
+
+
+
+                if (text.isEmpty()) { //비어있다면
+                    Toast.makeText(AddDietActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
+                } else { //음식이 입력된다면
+                    builder.show();
+
 
                 }
             }
