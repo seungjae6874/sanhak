@@ -5,9 +5,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.content.ContentValues;
@@ -17,10 +19,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.mobileconnectors.lambdainvoker.LambdaFunctionException;
+import com.amazonaws.mobileconnectors.lambdainvoker.LambdaInvokerFactory;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.amazonaws.regions.Region;
@@ -79,14 +84,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Locale;
 
 public class AddDietActivity extends AppCompatActivity
 {
     TextView TextV1,TextV2;
     EditText editTextInput;
-    Button textInputButton,voiceInputButton,resetButton ;
-    ImageButton voiceRecordButton;
+    Button textInputButton,voiceInputButton;
+    ImageButton voiceRecordButton,finishButton;
     String text;
     CognitoCachingCredentialsProvider credentialsProvider;
     AmazonS3 s3;
@@ -119,14 +125,28 @@ public class AddDietActivity extends AppCompatActivity
         s3.setEndpoint("s3.ap-northeast-2.amazonaws.com");
 
 
+        //음식 정보 받아오기 시간, 음식이름
+        CognitoCachingCredentialsProvider cognitoProvider = new CognitoCachingCredentialsProvider(
+                this.getApplicationContext(),
+                "ap-northeast-2:de25ebac-0c12-4991-9bb9-a95df04a6441",
+                Regions.AP_NORTHEAST_2);
+
+        LambdaInvokerFactory factory = new LambdaInvokerFactory(this.getApplicationContext(),
+                Regions.AP_NORTHEAST_2, cognitoProvider);
+        final MyInterface2 myInterface2 = factory.build(MyInterface2.class);
+
+        //
+
+
 
 
         TextV1 = findViewById(R.id.textView1);
         TextV2 = findViewById(R.id.textView2);
         final AutoCompleteTextView editTextInput = (AutoCompleteTextView) findViewById(R.id.editText);  // Text입력 받는 곳  // Text입력 받는 곳
         textInputButton = findViewById(R.id.TextInputButton); // 텍스트 입력완료
-        voiceInputButton = findViewById(R.id.VoiceInputButton); // 녹음 버튼 누르면 입력
-        voiceRecordButton = findViewById(R.id.VoiceRecordButton); // 입력 완료 버튼튼
+        voiceInputButton = findViewById(R.id.VoiceInputButton); // 녹음 된 파일을 aws로 전송
+        voiceRecordButton = findViewById(R.id.VoiceRecordButton); // 입력 시작
+        finishButton = findViewById(R.id.ResetButton);// 녹음 종료
 
         editTextInput.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,items));
 
@@ -142,7 +162,10 @@ public class AddDietActivity extends AppCompatActivity
         fileName = file.getAbsolutePath();  // 파일 위치 가져옴
         Toast.makeText(getApplicationContext(), "파일 위치:"+fileName, Toast.LENGTH_SHORT).show();
 
-        Intent Intent = getIntent();// 인덴트 받아오고 시작
+        Intent intentd = getIntent();// 인덴트 받아오고 시작
+        Bundle bundle = intentd.getExtras(); //홈에서 보낸 값을 담는 번들
+        //이 값이 쿼리로 이용할 날짜값
+
 
         // 여기는 이제 음식텍스트로 입력
         textInputButton.setOnClickListener(new View.OnClickListener() {
@@ -188,12 +211,14 @@ public class AddDietActivity extends AppCompatActivity
                             );
                             Toast.makeText(AddDietActivity.this, "Success to upload", Toast.LENGTH_LONG).show();
 
-                            Intent intentH2 = new Intent(AddDietActivity.this, HomeActivity.class);
-                            intentH2.putExtra("FoodName",text);
-                            startActivity(intentH2);
 
 
                         }
+                        Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+
+                        startActivity(intentTH);
+
+
 
                     }
                 });
@@ -228,7 +253,7 @@ public class AddDietActivity extends AppCompatActivity
         // 음성입력
 
         //녹음 시작
-        voiceRecordButton.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.VoiceRecordButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {   // 녹음 시작
                 if (recorder == null) {
@@ -302,9 +327,88 @@ public class AddDietActivity extends AppCompatActivity
 
                 }
 
+                //여기서 이제 dialog 돌자
+                CheckTypeTask task = new CheckTypeTask();
+                task.execute();
+
+
+
+                /*
+
+*/
+
+
+
             }
 
         });
+
+
+    }
+    private class CheckTypeTask extends AsyncTask<Void,Void,Void>{
+        ProgressDialog dialog = new ProgressDialog(AddDietActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("텍스트 추출 중입니다...");
+            dialog.show();
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void...arg0){
+            try{
+                for(int i =0; i <5; i++){
+                    dialog.setProgress(i*100);
+                    Thread.sleep(11000);
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result){
+            dialog.dismiss();
+            Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+
+            startActivity(intentTH);
+            super.onPostExecute(result);
+        }
+
+
+    }
+    //text부분 다이얼로그
+    private class CheckTypeTask2 extends AsyncTask<Void,Void,Void>{
+        ProgressDialog dialog = new ProgressDialog(AddDietActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("저장 중입니다...");
+            dialog.show();
+            super.onPreExecute();
+        }
+        @Override
+        protected Void doInBackground(Void...arg0){
+            try{
+                for(int i =0; i <5; i++){
+                    dialog.setProgress(i*30);
+                    Thread.sleep(500);
+                }
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result){
+            dialog.dismiss();
+            Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+
+            startActivity(intentTH);
+            super.onPostExecute(result);
+        }
 
 
     }

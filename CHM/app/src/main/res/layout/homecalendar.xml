@@ -45,10 +45,22 @@
         app:layout_constraintRight_toLeftOf="@id/checkd"
         app:layout_constraintTop_toBottomOf="@id/calendarView" />
 
+    <Button
+        android:id="@+id/update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toTopOf="@id/lay1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/diettable" />
+
     <LinearLayout
         android:id="@+id/lay1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80sp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -66,6 +78,7 @@
             android:text="식단추가"
             android:textColor="#FFFFFF"
             android:textSize="13dp" />
+
         <Button
             android:id="@+id/CheckFeed"
             android:layout_width="wrap_content"
@@ -73,8 +86,7 @@
             android:layout_marginBottom="30sp"
             android:background="@drawable/bin_blue"
             android:text="피드백 확인"
-            android:textColor="#FFFFFF"
-            />
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
@@ -213,6 +225,35 @@
 
             <TextView
                 android:id="@+id/rd_meal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="없음" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/ld_row"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/ld_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/ld_foodname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="없음" />
+
+            <TextView
+                android:id="@+id/ld_meal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
