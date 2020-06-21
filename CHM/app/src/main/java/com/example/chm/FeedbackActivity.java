@@ -25,6 +25,10 @@ public class FeedbackActivity extends AppCompatActivity {
     TextView feedresult;
     ImageView image;
     Button score;
+    double eatkcal = 0;
+    double criterion = 0;
+    double minus = 0;
+
 
     String eatsum;
     @Override
@@ -38,7 +42,7 @@ public class FeedbackActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras(); //홈에서 보낸 값을 담는 번들
         //이 값이 쿼리로 이용할 날짜값
         String querydate = bundle.getString("checkdate");
-        final String ksum = bundle.getString("rkcal");
+        String ksum = bundle.getString("rkcal");
         String weight = bundle.getString("rweight");
 
         //---------------------------
@@ -64,7 +68,9 @@ public class FeedbackActivity extends AppCompatActivity {
 
         //나중에 checkdate는 날짜를 선택했을때의 피드백 날짜이다.
         RequestClass request = new RequestClass(querydate, ksum);
-        RequestClass request2 = new RequestClass(querydate, ksum);
+        //Log.d("date" ,querydate);
+        Log.d("ksum",ksum);
+        //RequestClass request2 = new RequestClass(querydate, ksum);
         new AsyncTask<RequestClass, Void, ResponseClass>() {
             @Override
             protected ResponseClass doInBackground(RequestClass... params) {
@@ -100,24 +106,38 @@ public class FeedbackActivity extends AppCompatActivity {
         score.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int eatkcal = 0;
-                int criterion = 0;
-                criterion = Integer.parseInt(ksum);
-                eatkcal = Integer.parseInt(eatsum); //먹은 칼로리를 얻고 ksum과의 차이로 피드백 계산하자
-                double minus = 0;
-                minus = eatkcal-criterion;
+                Intent intent2 = getIntent();
 
-                if((Math.abs(minus)/criterion)*100 <= 10){ //A등급
+                Bundle bundle2 = intent2.getExtras(); //홈에서 보낸 값을 담는 번들
+                //이 값이 쿼리로 이용할 날짜값
+                //String querydate = bundle2.getString("checkdate");
+
+                String ksum2 = bundle2.getString("rkcal");
+
+                criterion = Integer.parseInt(ksum2);
+                eatkcal = Integer.parseInt(eatsum); //먹은 칼로리를 얻고 ksum과의 차이로 피드백 계산하자
+
+
+                minus = eatkcal-criterion;
+                double realm = Math.abs(minus);
+                double result = (realm/criterion)*100;
+                String minus1 = String.valueOf(result);
+                Log.d("minus1 ", minus1);
+
+                //feedresult.setText("A등급\n 균형 잡힌 식사를 잘 하고 있습니다!");
+                //image.setImageResource(R.drawable.agrade);
+
+                if(result <= 10){ //A등급
                     feedresult.setText("A등급\n 균형 잡힌 식사를 잘 하고 있습니다!");
                     image.setImageResource(R.drawable.agrade);
                 }
 
-                else if(((Math.abs(minus)/criterion)*100 <= 30)&&((Math.abs(minus)/criterion)*100 > 10)){ //B등급
+                else if((result <= 30)&&(result > 10)){ //B등급
                     feedresult.setText("B등급\n 조금만 식단에 더 신경쓴다면 \n균형잡힌 식습관을 가질 수 있어요!");
                     image.setImageResource(R.drawable.bgrade);
                 }
 
-                else if((Math.abs(minus)/criterion)*100 >50){ //C등급
+                else if(result >30){ //C등급
                     feedresult.setText("D등급\n 불균형한 식습관입니다.\n 조언에 맞는 식단 관리가 필요합니다!");
                     image.setImageResource(R.drawable.cgrade);
                 }
