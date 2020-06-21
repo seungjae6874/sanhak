@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         SimpleDateFormat initdate2 = new SimpleDateFormat("yyyyMMdd");
         String format_time1 = initdate.format (System.currentTimeMillis());
         //querydate = initdate2.format(System.currentTimeMillis());
-       // querydate = querydate.substring(2,querydate.length());
+        // querydate = querydate.substring(2,querydate.length());
         date.setText(format_time1);
 
 
@@ -143,6 +143,55 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d(TAG, "date: " + date2);
                 date.setText(dates);// 해당 날짜를 TextView에 표시
 
+                //aws 연결 시작
+                Request2Class request = new Request2Class(querydate);
+                //Log.d(TAG, "querydate: " + querydate);
+
+                new AsyncTask<Request2Class, Void, Response2Class>() {
+                    @Override
+                    protected Response2Class doInBackground(Request2Class... params) {
+                        // invoke "echo" method. In case it fails, it will throw a
+                        // LambdaFunctionException.
+                        try {
+                            return myInterface2.getFoodinfo(params[0]);
+                        } catch (LambdaFunctionException lfe) {
+                            Log.e("Tag", "Failed to invoke echo", lfe);
+                            Toast.makeText(HomeActivity.this, "선택한 날짜에 정보가 없습니다.",Toast.LENGTH_LONG).show();
+                            return null;
+                        }
+
+                    }
+
+                    @Override
+                    protected void onPostExecute(Response2Class result) {
+                        if (result == null) {
+                            Toast.makeText(HomeActivity.this, "선택한 날짜에 정보가 없습니다.",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        // Do a toast
+                        f1 = result.getfood1();
+                        meal1 = result.getMeal1();
+                        f2 = result.getfood2();
+                        meal2 = result.getMeal2();
+                        f3 = result.getfood3();
+                        meal3 = result.getMeal3();
+                        f4 = result.getfood4();
+                        meal4 = result.getMeal4();
+                        food1.setText(f1);
+                        morning.setText(meal1);
+                        food2.setText(f2);
+                        lunch.setText(meal2);
+                        food3.setText(f3);
+                        dinner.setText(meal3);
+                        food4.setText(f4);
+                        snack.setText(meal4);
+                        //이제 이 list를 Home으로 넘겨주자
+
+                        //Toast.makeText(MainActivity.this, result.getFeedback(), Toast.LENGTH_LONG).show();
+                    }
+                }.execute(request);
+
 
             }
         });
@@ -158,7 +207,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
+/*
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,13 +264,16 @@ public class HomeActivity extends AppCompatActivity {
                 //연결 끝
             }
         });
+
+
+ */
         //----------------------------------------------------------------------
         //피드백 체크 버튼 눌렸을 때 -> 달력 뜨고 날짜 선택 -> 해당 날짜를 가지고 aws로 feed 요청 checkdate라는 값으로
         feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(HomeActivity.this, callbackMethod,2020,5,15);
-                dialog.show();
+                //DatePickerDialog dialog = new DatePickerDialog(HomeActivity.this, callbackMethod,2020,5,15);
+                //dialog.show();
 
 
                 Handler handler = new Handler();
@@ -235,7 +287,7 @@ public class HomeActivity extends AppCompatActivity {
                         Intent intentC = new Intent(HomeActivity.this, FeedbackActivity.class);
                         checkdate = check.getText().toString();
                         intentC.putExtra("rkcal",ksum);
-                        intentC.putExtra("checkdate",checkdate);
+                        intentC.putExtra("checkdate",querydate);
                         //우선 이 값을 intent로 새로운 feedresultactivity로 보내자
                         startActivity(intentC);
                     }
