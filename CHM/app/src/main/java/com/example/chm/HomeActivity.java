@@ -67,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
         check2 = findViewById(R.id.checkd2);
         ksum = bundle.getString("rkcal");//권장 칼로리
         //addfoodname = bundle.getString("Foodname");
-        update = findViewById(R.id.update); //식단 정보 갱신
+        //update = findViewById(R.id.update); //식단 정보 갱신
 
 
 
