@@ -93,7 +93,7 @@ public class AddDietActivity extends AppCompatActivity
     EditText editTextInput;
     Button textInputButton,voiceInputButton;
     ImageButton voiceRecordButton,finishButton;
-    String text;
+    String text,Food;
     CognitoCachingCredentialsProvider credentialsProvider;
     AmazonS3 s3;
     File foodfilepath;
@@ -101,8 +101,9 @@ public class AddDietActivity extends AppCompatActivity
     TransferUtility transferUtilityaudio;
 
     MediaRecorder recorder;
-    String fileName;
+    String fileName,Food2;
     MediaPlayer mediaPlayer;
+    int flag;
 
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 1;
     int position = 0;
@@ -135,7 +136,19 @@ public class AddDietActivity extends AppCompatActivity
                 Regions.AP_NORTHEAST_2, cognitoProvider);
         final MyInterface2 myInterface2 = factory.build(MyInterface2.class);
 
+        //audio 추출 메세지
+        CognitoCachingCredentialsProvider cognitoProvider2 = new CognitoCachingCredentialsProvider(
+                getApplicationContext(),
+                "ap-northeast-2:b4934010-af0f-4f32-8e53-43ad634d4645", // 자격 증명 풀 ID
+                Regions.AP_NORTHEAST_2 // 리전
+        );
+
+        LambdaInvokerFactory factory2 = new LambdaInvokerFactory(this.getApplicationContext(),
+                Regions.AP_NORTHEAST_2, cognitoProvider2);
+
+        final MyInterface3 myInterface3 = factory2.build(MyInterface3.class);
         //
+
 
 
 
@@ -237,7 +250,6 @@ public class AddDietActivity extends AppCompatActivity
 
 
 
-
                 if (text.isEmpty()) { //비어있다면
                     Toast.makeText(AddDietActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
                 } else { //음식이 입력된다면
@@ -247,7 +259,6 @@ public class AddDietActivity extends AppCompatActivity
                 }
             }
         });
-
 
 
         // 음성입력
@@ -281,10 +292,6 @@ public class AddDietActivity extends AppCompatActivity
                     recorder.release();
                     recorder = null;
                 }
-
-
-
-
 
                 Toast.makeText(getApplicationContext(), "녹음종료", Toast.LENGTH_SHORT).show();
             }
@@ -328,14 +335,88 @@ public class AddDietActivity extends AppCompatActivity
                 }
 
                 //여기서 이제 dialog 돌자
+                flag = 0;
                 CheckTypeTask task = new CheckTypeTask();
                 task.execute();
+                try{Thread.sleep(5000);}
+                catch(InterruptedException e){
+                    System.out.println(e.getMessage());
+                }
+
+
+                //나중에 checkdate는 날짜를 선택했을때의 피드백 날짜이다.
+                Request3Class request = new Request3Class("1");
+
+                new AsyncTask<Request3Class, Void, Response3Class>() {
+                    @Override
+                    protected Response3Class doInBackground(Request3Class... params) {
+                            // invoke "echo" method. In case it fails, it will throw a
+                            // LambdaFunctionException.
+                        try {
+                            return myInterface3.getaudiofood(params[0]);
+                        } catch (LambdaFunctionException lfe) {
+                            Log.e("Tag", "Failed to invoke echo", lfe);
+                            Toast.makeText(AddDietActivity.this, "선택한 날짜에 정보가 없습니다.",Toast.LENGTH_LONG).show();
+                            return null;
+                        }
+
+                    }
+
+                    @Override
+                    protected void onPostExecute(Response3Class result) {
+                        if (result == null) {
+                            Toast.makeText(AddDietActivity.this, "선택한 날짜에 정보가 없습니다.",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddDietActivity.this);
+                        String TAG = "이(가) 맞습니까";
+                        builder.setTitle("확인창");
+
+
+                            // Do a toast
+                        Food = result.getFood();
+                        Log.d("FOOD",Food);
+                        //text = editTextInput.getText().toString().trim();
+                        builder.setMessage(Food + TAG);
+
+                        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(getApplicationContext(), "해당음식을 기록합니다", Toast.LENGTH_SHORT).show();
+
+                                Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+
+                                startActivity(intentTH);
+
+                            }
+                        });
+
+                        builder.setNegativeButton("아니요", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Toast.makeText(getApplicationContext(), "다시 입력해주세요", Toast.LENGTH_SHORT).show();
+                                dialogInterface.cancel();
+
+                            }
+                        });
+
+                        if (Food.isEmpty()) { //비어있다면
+                            Toast.makeText(AddDietActivity.this, "Please enter something", Toast.LENGTH_SHORT).show();
+                        } else { //음식이 입력된다면
+                            builder.show();
+
+
+                        }
+
+
+                            //Toast.makeText(MainActivity.this, result.getFeedback(), Toast.LENGTH_LONG).show();
+                    }
+                }.execute(request);
+
+                Food2 = Food;
 
 
 
-                /*
-
-*/
 
 
 
@@ -360,7 +441,7 @@ public class AddDietActivity extends AppCompatActivity
             try{
                 for(int i =0; i <5; i++){
                     dialog.setProgress(i*100);
-                    Thread.sleep(11000);
+                    Thread.sleep(12000);
                 }
             }catch (InterruptedException e){
                 e.printStackTrace();
@@ -370,10 +451,12 @@ public class AddDietActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void result){
             dialog.dismiss();
-            Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+            flag = 1;
+
+            /*Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
 
             startActivity(intentTH);
-            super.onPostExecute(result);
+            super.onPostExecute(result);*/
         }
 
 
@@ -404,10 +487,10 @@ public class AddDietActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void result){
             dialog.dismiss();
-            Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+            /*Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
 
             startActivity(intentTH);
-            super.onPostExecute(result);
+            super.onPostExecute(result);*/
         }
 
 
