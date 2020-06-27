@@ -147,7 +147,15 @@ public class LoginResultActivity extends AppCompatActivity {
                 Intent intentH = new Intent(LoginResultActivity.this, HomeActivity.class);
                 intentH.putExtra("rkcal",rksum); //전송
                 intentH.putExtra("rweight",resultweight);
+                Intent intentAD = new Intent(LoginResultActivity.this, AddDietActivity.class);
+                intentAD.putExtra("rkcal",rksum); //전송
+                intentAD.putExtra("rweight",resultweight);
+                Intent intentDD = new Intent(LoginResultActivity.this, DeleteActivity.class);
+                intentDD.putExtra("rkcal",rksum); //전송
+                intentDD.putExtra("rweight",resultweight);
                 startActivity(intentH);
+
+
                 //finish(); // 현재 액티비티 없애고 다른 액티비티를 띄운다. 아래링크 대로
                 //https://hashcode.co.kr/questions/3484/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%99%94%EB%A9%B4-%EC%A0%84%ED%99%98-%EC%A4%91-%EC%97%90%EB%9F%AC
 

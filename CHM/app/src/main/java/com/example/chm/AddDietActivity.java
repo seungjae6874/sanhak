@@ -101,7 +101,7 @@ public class AddDietActivity extends AppCompatActivity
     TransferUtility transferUtilityaudio;
 
     MediaRecorder recorder;
-    String fileName,Food2;
+    String fileName,Food2,ksum;
     MediaPlayer mediaPlayer;
     int flag;
 
@@ -116,6 +116,13 @@ public class AddDietActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addfood);
+
+        Intent intent = getIntent(); //Intent수신
+        Bundle bundle = intent.getExtras();
+
+        Intent intentd = getIntent();// 인덴트 받아오고 시작
+        Bundle bundle4 = intentd.getExtras(); //홈에서 보낸 값을 담는 번들
+        ksum = bundle4.getString("rkcal");//권장 칼로리
 
         credentialsProvider = new CognitoCachingCredentialsProvider(getApplicationContext(),
                 "ap-northeast-2:0736fa12-bb2d-489c-90e5-460af3a31e38",
@@ -175,8 +182,7 @@ public class AddDietActivity extends AppCompatActivity
         fileName = file.getAbsolutePath();  // 파일 위치 가져옴
         Toast.makeText(getApplicationContext(), "파일 위치:"+fileName, Toast.LENGTH_SHORT).show();
 
-        Intent intentd = getIntent();// 인덴트 받아오고 시작
-        Bundle bundle = intentd.getExtras(); //홈에서 보낸 값을 담는 번들
+
         //이 값이 쿼리로 이용할 날짜값
 
 
@@ -228,6 +234,7 @@ public class AddDietActivity extends AppCompatActivity
 
                         }
                         Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+                        intentTH.putExtra("rkcal",ksum);
 
                         startActivity(intentTH);
 
@@ -385,6 +392,7 @@ public class AddDietActivity extends AppCompatActivity
                                 Toast.makeText(getApplicationContext(), "해당음식을 기록합니다", Toast.LENGTH_SHORT).show();
 
                                 Intent intentTH = new Intent(AddDietActivity.this, HomeActivity.class);
+                                intentTH.putExtra("rkcal",ksum);
 
                                 startActivity(intentTH);
 

@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,18 +37,21 @@ public class HomeActivity extends AppCompatActivity {
     TextView diettable;
     TextView date;
     TextView check,check2;
+    EditText dfood,dmeal;
+
 
     TextView food1,food2,food3;
     TextView morning, lunch, dinner,snack,food4;
 
 
-    Button AddDiet,update;
+    Button AddDiet,update,delete;
     Button EditDiet;
     Button feed;
     String f1,f2,f3,f4,meal1,meal2,meal3,meal4;
     String checkdate,querydate;
     String ksum;
     String addfoodname,addmeal; //식단 추가를 통해 받아온 음식 이름이다.
+    String deletef, deletem;
     int feedy,feedm,feedd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,11 @@ public class HomeActivity extends AppCompatActivity {
         feed = findViewById(R.id.CheckFeed);
         check = findViewById(R.id.checkd);
         check2 = findViewById(R.id.checkd2);
+
         ksum = bundle.getString("rkcal");//권장 칼로리
+        delete = findViewById(R.id.delete);
+        dfood = findViewById(R.id.food);
+        dmeal = findViewById(R.id.meal);
         //addfoodname = bundle.getString("Foodname");
         //update = findViewById(R.id.update); //식단 정보 갱신
 
@@ -77,6 +85,8 @@ public class HomeActivity extends AppCompatActivity {
                 "ap-northeast-2:18f29d04-451e-4051-a2c4-8c7fdc8c960f", // 자격 증명 풀 ID
                 Regions.AP_NORTHEAST_2 // 리전
         );
+
+        //
         //음식 정보 받아오기 시간, 음식이름
 
         LambdaInvokerFactory factory = new LambdaInvokerFactory(this.getApplicationContext(),
@@ -114,6 +124,9 @@ public class HomeActivity extends AppCompatActivity {
         // querydate = querydate.substring(2,querydate.length());
         date.setText(format_time1);
 
+        //
+
+
 
 
 
@@ -146,6 +159,9 @@ public class HomeActivity extends AppCompatActivity {
                 //aws 연결 시작
                 Request2Class request = new Request2Class(querydate);
                 //Log.d(TAG, "querydate: " + querydate);
+
+                //삭제에 대한 것도 넣자.
+
 
                 new AsyncTask<Request2Class, Void, Response2Class>() {
                     @Override
@@ -201,12 +217,32 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // home으로 보내는 Intent
                 Intent intentA = new Intent(HomeActivity.this, AddDietActivity.class);
+                intentA.putExtra("rkcal",ksum); //전송
                 startActivity(intentA);
                 //finish(); // 현재 액티비티 없애고 다른 액티비티를 띄운다. 아래링크 대로
                 //https://hashcode.co.kr/questions/3484/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%ED%99%94%EB%A9%B4-%EC%A0%84%ED%99%98-%EC%A4%91-%EC%97%90%EB%9F%AC
 
             }
         });
+        //삭제 기능 그냥 식단 테이블 밑에 버튼이랑 edit text로 음식이름이랑 간식
+
+        deletef = dfood.getText().toString();
+        deletem = dmeal.getText().toString();
+
+        delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentD = new Intent(HomeActivity.this, DeleteActivity.class);
+
+                    intentD.putExtra("deletef",deletef);
+                    intentD.putExtra("deletem",deletem);
+                    intentD.putExtra("querydate",querydate);
+                    Log.d(TAG, "deletef: " + deletef);
+                    startActivity(intentD);
+                }
+            });
+
+        //
 /*
         update.setOnClickListener(new View.OnClickListener() {
             @Override
