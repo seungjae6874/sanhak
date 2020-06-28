@@ -24,13 +24,13 @@ public class DeleteActivity extends AppCompatActivity {
         Intent intent = getIntent(); //Intent수신
         Bundle bundle = intent.getExtras();
 
-        foodd = bundle.getString("deletef");//권장 칼로리
+        foodd = bundle.getString("deletef");
         meald = bundle.getString("deletem");//권장 칼로리
         querydated = bundle.getString("querydate");//권장 칼로리
 
         ksum = bundle.getString("rkcal");
 
-        Request4Class request4 = new Request4Class(querydated, foodd, meald);
+        Request4Class request = new Request4Class(querydated, meald, foodd);
 
         CognitoCachingCredentialsProvider cognitoProvider4 = new CognitoCachingCredentialsProvider(
                 getApplicationContext(),
@@ -52,7 +52,7 @@ public class DeleteActivity extends AppCompatActivity {
                     return myInterface4.DeleteFood2(params[0]);
                 } catch (LambdaFunctionException lfe) {
                     Log.e("Tag", "Failed to invoke echo", lfe);
-                    Toast.makeText(DeleteActivity.this, "선택한 날짜에 정보가 없습니다!",Toast.LENGTH_LONG).show();
+                    //Toast.makeText(DeleteActivity.this, "선택한 날짜에 정보가 없습니다!",Toast.LENGTH_LONG).show();
                     return null;
                 }
 
@@ -69,7 +69,7 @@ public class DeleteActivity extends AppCompatActivity {
 
                 //Toast.makeText(MainActivity.this, result.getFeedback(), Toast.LENGTH_LONG).show();
             }
-        }.execute(request4);
+        }.execute(request);
 
         Intent intentD = new Intent(DeleteActivity.this, HomeActivity.class);
         intentD.putExtra("rkcal",ksum);

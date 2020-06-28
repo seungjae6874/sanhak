@@ -226,12 +226,13 @@ public class HomeActivity extends AppCompatActivity {
         });
         //삭제 기능 그냥 식단 테이블 밑에 버튼이랑 edit text로 음식이름이랑 간식
 
-        deletef = dfood.getText().toString();
-        deletem = dmeal.getText().toString();
+
 
         delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    deletef = dfood.getText().toString();
+                    deletem = dmeal.getText().toString();
                     Intent intentD = new Intent(HomeActivity.this, DeleteActivity.class);
 
                     intentD.putExtra("deletef",deletef);
